@@ -1,20 +1,29 @@
-# IDE Cruft
-eclipse/
-.idea/
-.vscode/launch.json
-.vscode/tasks.json
-classes/
-*.iml
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
 *.ipr
 *.iws
+*.iml
+.idea
 
-# Gradle and build
-.gradle/
-gradle-app.setting
-build/
+# gradle
+build
+.gradle
 
-# Runtime
-run/
+# other
+eclipse
+run
+runs
+run-data
+
+repo
 
 # OS and misc
 .DS_Store

@@ -7,12 +7,13 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import com.kylev.nerdingcraft.block.WoolFurnace;
 
@@ -25,26 +26,23 @@ public class NerdingCraft {
     public static Logger LOGGER = LogUtils.getLogger();
 
     // Registries
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS,
-            NerdingCraft.MOD_ID);
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS,
-            NerdingCraft.MOD_ID);
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MOD_ID);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MOD_ID);
 
     // A minimal block and item
-    public static final RegistryObject<Block> SMILING_BLOCK = BLOCKS.register("smiling_block",
+    public static final DeferredBlock<Block> SMILING_BLOCK = BLOCKS.register("smiling_block",
             () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.ICE)));
-    public static final RegistryObject<Item> SMILING_BLOCK_ITEM = ITEMS.register("smiling_block",
+    public static final DeferredItem<Item> SMILING_BLOCK_ITEM = ITEMS.register("smiling_block",
             () -> new BlockItem(SMILING_BLOCK.get(), new Item.Properties().stacksTo(64)));
 
     // A customized furnace
-    public static final RegistryObject<Block> WOOL_FURNACE = BLOCKS.register("wool_furnace",
+    public static final DeferredBlock<Block> WOOL_FURNACE = BLOCKS.register("wool_furnace",
             () -> new WoolFurnace(BlockBehaviour.Properties.of().mapColor(MapColor.WOOL)));
-    public static final RegistryObject<Item> WOOL_FURNACE_ITEM = ITEMS.register("wool_furnace",
+    public static final DeferredItem<Item> WOOL_FURNACE_ITEM = ITEMS.register("wool_furnace",
             () -> new BlockItem(WOOL_FURNACE.get(), new Item.Properties().stacksTo(16)));
 
-    public NerdingCraft(FMLJavaModLoadingContext context) {
+    public NerdingCraft(IEventBus modEventBus, ModContainer modContainer) {
         LOGGER.info("NerdingCraft constructor");
-        IEventBus modEventBus = context.getModEventBus();
 
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
